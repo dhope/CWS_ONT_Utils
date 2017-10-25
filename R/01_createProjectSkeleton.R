@@ -52,22 +52,31 @@ createProjectSkeleton <- function(dir = ".",
 
   useSandbox(dir)
 
-  message("Writing script for style checking")
-  copyFile(dir, "00_checkCodeStyle.R", "RScripts")
-
   if (exampleScript) {
     message("Writing example script")
     copyFile(dir, "exampleScript.R", "RScripts")
   }
 
+  checkingScript <- readLines(system.file("00_checkCodeStyle.R",
+                                          package = "INWTUtils"))
+
   if (!is.null(pkgName)) {
     createPackage(dir, pkgName, pkgFolder, ...)
+    checkingScript[22] <- gsub("\\./",
+                               addBackslash(pkgFolder),
+                               checkingScript[22])
+  } else {
+    checkingScript <- checkingScript[-c(22, 52, 60:63, 67:68)]
   }
 
   if (rProject) {
     message("Creating R Project")
     createProject(!is.null(pkgName), pkgFolder, dir)
   }
+
+  message("Writing script for style checking")
+  writeLines(text = checkingScript,
+             con = paste0(dir, "RScripts/00_checkCodeStyle.R"))
 
 }
 
@@ -76,7 +85,7 @@ createProjectSkeleton <- function(dir = ".",
 #'
 #' @description The following steps are taken:
 #' \itemize{
-#'   \item Create folders libWin, libLinux
+#'   \item Create folders libWin, libLinux, libMac
 #'   \item Write .gitignore into these folders so they can be commited without
 #'   any real content
 #'   \item Write .RProfile telling R to install and look for packages in libWin
@@ -90,14 +99,14 @@ createProjectSkeleton <- function(dir = ".",
 useSandbox <- function(dir) {
 
   dir <- addBackslash(dir)
-  folders <- c("libWin", "libLinux")
+  folders <- c("libWin", "libLinux", "libMac")
 
   message(paste0("Creating directories: ", paste0(folders, collapse = ", ")))
   lapply(paste0(dir, folders), dir.create)
 
   message("Writing .gitignore")
-  copyFile(dir, "gitignore", "libLinux/.gitignore")
-  copyFile(dir, "gitignore", "libWin/.gitignore")
+  lapply(paste0(folders, "/.gitignore"),
+         function(x) copyFile(dir, "gitignore", x))
 
   message("Writing .Rprofile")
   copyFile(dir, "Rprofile", ".Rprofile")
@@ -161,10 +170,10 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
   tmpDir <- paste0(tmpDir, "/packageFolder")
 
   setup(path = tmpDir,
-         description = list(Package = pkgName,
-                            Suggests = "INWTUtils, lintr"),
-         rstudio = FALSE,
-         ... = ...)
+        description = list(Package = pkgName,
+                           Suggests = "INWTUtils, lintr"),
+        rstudio = FALSE,
+        ... = ...)
 
   message("Copy files from temporary folder to package destination")
   file.copy(from = list.files(tmpDir, full.names = TRUE),
