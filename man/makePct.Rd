@@ -4,7 +4,8 @@
 \alias{makePct}
 \title{Create percentage from share}
 \usage{
-makePct(x, digits = 0, percSymbol = TRUE, keepTrailing0 = TRUE)
+makePct(x, digits = 0, percSymbol = TRUE, keepTrailing0 = TRUE,
+  roundToZero = TRUE)
 }
 \arguments{
 \item{x}{numeric: a share}
@@ -15,6 +16,9 @@ makePct(x, digits = 0, percSymbol = TRUE, keepTrailing0 = TRUE)
 
 \item{keepTrailing0}{logical: keep trailing zeros (decimals) to have the same
 length for all numbers?}
+
+\item{roundToZero}{logical: round small values off to zero or return string
+like "< 0.05"?}
 }
 \value{
 Character
@@ -28,4 +32,6 @@ makePct(1.251, percSymbol = FALSE)
 makePct(0.005, digits = 2)
 makePct(0.26, digits = 2, keepTrailing0 = FALSE)
 makePct(0.26, digits = 2, keepTrailing0 = TRUE)
+makePct(0.004, roundToZero = TRUE) # Default
+makePct(0.004, roundToZero = FALSE)
 }

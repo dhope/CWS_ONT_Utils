@@ -27,6 +27,8 @@ formatBigNumbers <- function(x, bigMark = "\\\\,", digits = 0) {
 #' @param percSymbol logical: return the "\%" symbol?
 #' @param keepTrailing0 logical: keep trailing zeros (decimals) to have the same
 #' length for all numbers?
+#' @param roundToZero logical: round small values off to zero or return string
+#' like "< 0.05"?
 #'
 #' @return Character
 #'
@@ -37,10 +39,21 @@ formatBigNumbers <- function(x, bigMark = "\\\\,", digits = 0) {
 #' makePct(0.005, digits = 2)
 #' makePct(0.26, digits = 2, keepTrailing0 = FALSE)
 #' makePct(0.26, digits = 2, keepTrailing0 = TRUE)
-makePct <- function(x, digits = 0, percSymbol = TRUE, keepTrailing0 = TRUE) {
-  res <- (100 * x) %>%
-    round(digits = digits)
-  if (keepTrailing0) res <- formatC(res, digits = digits, format = "f")
+#' makePct(0.004, roundToZero = TRUE) # Default
+#' makePct(0.004, roundToZero = FALSE)
+makePct <- function(x,
+                    digits = 0,
+                    percSymbol = TRUE,
+                    keepTrailing0 = TRUE,
+                    roundToZero = TRUE) {
+  res <- (100 * x) %>% round(digits = digits)
+
+  if (res == 0 & !roundToZero) {
+    res <- paste0("<", 5 / (10 ^ (1 + digits)))
+  } else if (keepTrailing0) {
+    res <- formatC(res, digits = digits, format = "f")
+  }
+
   if (percSymbol) res <- paste0(res, "%")
-  return(res)
+  return(as.character(res))
 }
