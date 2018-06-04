@@ -110,7 +110,7 @@ double_space_linter <- function(source_file) {
 internal_function_linter <- function(source_file) {
 
   # nolint start
-  ids <- grep(":::", source_file$file_lines)
+  ids <- grep(paste0(exceptInComments(), ":::"), source_file$file_lines)
   # nolint end
 
   lapply(ids, function(id) {
@@ -131,7 +131,7 @@ internal_function_linter <- function(source_file) {
 #' @export
 setwd_linter <- function(source_file) {
 
-  ids <- grep("^[^#\'\"]*setwd\\(", source_file$file_lines)
+  ids <- grep(paste0(exceptInComments(), "setwd\\("), source_file$file_lines)
   # Starting with arbitrary number of characters which are NOT # or quotes (to
     # exclude comments and quoted text)
   # String "setwd("
@@ -152,7 +152,7 @@ setwd_linter <- function(source_file) {
 #' @export
 source_linter <- function(source_file) {
 
-  ids <- grep("^[^#\'\"]*source\\(", source_file$file_lines)
+  ids <- grep(paste0(exceptInComments(), "source\\("), source_file$file_lines)
   # Starting with arbitrary number of characters which are NOT # or quotes (to
     # exclude comments and quoted text)
   # String "source("
@@ -174,7 +174,7 @@ source_linter <- function(source_file) {
 #' @export
 options_linter <- function(source_file) {
 
-  ids <- grep("^[^#\'\"]*options\\(", source_file$file_lines)
+  ids <- grep(paste0(exceptInComments(), "options\\("), source_file$file_lines)
   # Starting with arbitrary number of characters which are NOT # or quotes (to
   # exclude comments and quoted text)
   # String "options("
@@ -198,7 +198,7 @@ options_linter <- function(source_file) {
 #' @export
 sapply_linter <- function(source_file) {
 
-  ids <- grep("^[^#\'\"]*sapply\\(", source_file$file_lines)
+  ids <- grep(paste0(exceptInComments(), "sapply\\("), source_file$file_lines)
 
   lapply(ids, function(id) {
     Lint(filename = source_file$filename,
@@ -233,4 +233,13 @@ trailing_whitespaces_linter <- function(source_file) {
          message = "Trailing whitespaces.",
          linter = "trailing_whitespaces_linter")
   })
+}
+
+
+#' First part of a regular expression to exclude the pattern if it appears in
+#' a comment
+#' @description Must be pasted together with the actual pattern that should be
+#' found only outside comment (and roxygen comments).
+exceptInComments <- function() {
+  "^[^#\'\"]*"
 }

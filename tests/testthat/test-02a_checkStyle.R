@@ -5,7 +5,8 @@ test_that("checkStyle returns correct type", {
   expect_true(file.exists(testFile))
   erg <- checkStyle(testFile, type = "script")
   expect_s3_class(erg, "lints")
-  expect_true(lapply(erg, class) %>% unlist %>% `==`("lint") %>% all)
+  expect_true(all(unlist(lapply(erg,
+                                function(x) class(x) == "lint"))))
 })
 
 

@@ -85,7 +85,10 @@ test_that("internal_function_linter", {
                                     "INWT some test dplyr:::foo"))
   # nolint end
   inputCorrect <- list(filename = "An example object",
-                       file_lines = c("INWTpkg::foo"))
+                       file_lines = c("INWTpkg::foo",
+                                      "# somePkg:::someFun",
+                                      "#' @examples INWTpkg:::someFun",
+                                      "#' INWTpkg:::someFun"))
   expect_true(lapply(internal_function_linter(inputWrong),
                      function(x) class(x) == "lint") %>% unlist %>% all)
   expect_equal(internal_function_linter(inputWrong) %>% length,
