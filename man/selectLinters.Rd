@@ -4,7 +4,8 @@
 \alias{selectLinters}
 \title{List of linters to check INWT style conventions}
 \usage{
-selectLinters(type = NULL, excludeLinters = list(), addLinters = list())
+selectLinters(type = NULL, excludeLinters = list(),
+  addLinters = list())
 }
 \arguments{
 \item{type}{character: Type of the file (\code{"script"}, \code{"pkgFuns"},

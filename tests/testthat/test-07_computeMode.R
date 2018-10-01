@@ -1,0 +1,29 @@
+context("Function to compute mode")
+
+if (interactive()) library(testthat)
+
+test_that("Mode is computed correctly", {
+  res1 <- mode(c(1, 1:5))
+  res2 <- mode(1:5)
+  res3 <- mode(1:5, notUniqueVal = 5)
+  res4 <- mode(rep("pla", 4))
+  res5 <- mode(c(NA, 1, NA, NA))
+  res6 <- mode(c(NA, NA), naVal = "onlyNAs")
+  res7 <- mode(c())
+
+  expect_is(res1, "character")
+  expect_is(res2, "character")
+  expect_is(res3, "character")
+  expect_is(res4, "character")
+  expect_is(res5, "character")
+  expect_is(res6, "character")
+  expect_is(res7, "character")
+
+  expect_equal(res1, "1")
+  expect_equal(res2, "notUnique")
+  expect_equal(res3, "5")
+  expect_equal(res4, "pla")
+  expect_equal(res5, "1")
+  expect_equal(res6, "onlyNAs")
+  expect_equal(res7, "noValues")
+})
