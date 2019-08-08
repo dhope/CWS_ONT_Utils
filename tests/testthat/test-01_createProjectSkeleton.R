@@ -188,6 +188,7 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
   res10 <- check(pkg = paste0(tmpdir, "/tmp10"),
                  document = FALSE,
                  quiet = TRUE)
+
   expect_length(res10$errors, 0)
   expect_length(res10$warnings, 1)
   expect_length(res10$notes, 0)

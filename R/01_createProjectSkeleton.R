@@ -22,8 +22,7 @@
 #' live, relative to \code{dir}. "." per default, i.e., the project root.
 #' @param rProject logical: Create Rproject file?
 #' @param exampleScript logical: Create example script? (not yet used)
-#' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
-#' \code{\link[devtools]{setup}} if creating a package
+#' @param ... not used atm
 #'
 #' @examples createProjectSkeleton("tmp", rProject = TRUE)
 #'
@@ -140,8 +139,7 @@ copyFile <- function(dir, origin, dest = origin, ...) {
 #' @param pkgName character: Package name
 #' @param pkgFolder character: Folder where the package should live. \code{dir}
 #' per default.
-#' @param ... Further arguments passed to \code{\link[devtools]{create}} resp.
-#' \code{\link[devtools]{setup}}
+#' @param ... not used atm
 #'
 #' @examples
 #' \dontrun{

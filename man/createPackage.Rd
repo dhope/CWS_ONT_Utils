@@ -14,8 +14,7 @@ createPackage(dir, pkgName, pkgFolder = ".", ...)
 \item{pkgFolder}{character: Folder where the package should live. \code{dir}
 per default.}
 
-\item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
-\code{\link[devtools]{setup}}}
+\item{...}{not used atm}
 }
 \description{
 Creates a package, either directly into the directory specified
