@@ -9,16 +9,17 @@ Description: This package provides several useful functions for the work with
 	structure for a new project, functions to check the code style, and a
     function to ensure a clean working environment.
 Depends:
-    R (>= 3.4.4)
+    R (>= 3.5.2)
 Imports:
     devtools (>= 1.13.5),
     lintr (>= 1.0.2),
     magrittr (>= 1.5.0),
-    readr (>= 1.1.1)
+    readr (>= 1.1.1),
+    usethis
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: testthat,
     knitr,
     rmarkdown

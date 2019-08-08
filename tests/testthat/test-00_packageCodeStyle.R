@@ -1,11 +1,5 @@
 context("Package code style")
 
-if (interactive()) {
-  library(testthat)
-  library(lintr)
-  library(devtools)
-}
-
 test_that("Code is lint-free", {
 
   # Files to exclude from linter check
@@ -13,8 +7,6 @@ test_that("Code is lint-free", {
                      "testScript_checkStyle.R",
                      "doc/createProjectSkeleton.R",
                      "doc/checkCodeStyle.R")
-
-  if (interactive()) load_all()
 
   exclusions <- lapply(excludedFiles, function(file) {
     system.file(file, package = "INWTUtils") %>%

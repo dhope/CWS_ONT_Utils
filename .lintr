@@ -1,0 +1,5 @@
+linters: with_defaults()
+exclusions: list("inst/testScript_args_without_default.R", "inst/testScript_checkStyle.R")
+exclude: "# nolint"
+exclude_start: "# nolint start"
+exclude_end: "# nolint end"

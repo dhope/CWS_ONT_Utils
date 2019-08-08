@@ -123,7 +123,7 @@ useSandbox <- function(dir) {
 #' @param ... Further arguments passed to \code{\link[base]{file.copy}}
 copyFile <- function(dir, origin, dest = origin, ...) {
   file.copy(from = system.file(origin, package = "INWTUtils"),
-            to = paste0(dir, dest),
+            to = paste0(dir, "/", dest),
             ...)
 }
 
@@ -165,31 +165,38 @@ createPackage <- function(dir, pkgName, pkgFolder = ".", ...) {
   message("Create package in temporary folder")
   # This is required since setup cannot create a package in a folder whose name
   # is not suited as a package name, even if the package gets another name
-  tmpDir <- tempdir()
-  dir.create(path = paste0(tmpDir, "/packageFolder"))
-  tmpDir <- paste0(tmpDir, "/packageFolder")
 
-  setup(path = tmpDir,
-        description = list(Package = pkgName,
-                           Suggests = "INWTUtils, lintr"),
-        rstudio = FALSE,
-        ... = ...)
+  tmpDir <- createTmpPackage(
+    pkgName = pkgName,
+    description = list(Suggests = "INWTUtils, lintr")
+  )
 
   message("Copy files from temporary folder to package destination")
-  file.copy(from = list.files(tmpDir, full.names = TRUE),
+  file.copy(from = list.files(tmpDir, full.names = TRUE, all.files = TRUE, no.. = TRUE),
             to = packageDir,
             recursive = TRUE)
 
   unlink(tmpDir, recursive = TRUE)
+}
 
-  use_testthat(pkg = rmBackslash(packageDir))
+createTmpPackage <- function(pkgName, description) {
+  wd <- getwd()
+  on.exit(setwd(wd))
 
-  copyFile(dir, "testForCodeStyle.R",
-           paste0(ifelse(pkgOnToplevel, "", pkgFolder),
-                  "tests/testthat/test-00_codeStyle.R"))
+  tmpDir <- tempdir()
+  dir.create(path = paste0(tmpDir, "/", pkgName))
+  tmpDir <- paste0(tmpDir, "/", pkgName)
 
-  copyFile(dir, "Rbuildignore",
-           paste0(ifelse(pkgOnToplevel, "", pkgFolder), ".Rbuildignore"))
+  setwd(tmpDir)
+  usethis::proj_set(tmpDir, force = TRUE)
+
+  suppressWarnings(usethis::create_package(path = tmpDir, fields = description, rstudio = FALSE))
+  suppressWarnings(usethis::use_testthat())
+
+  copyFile(paste0(tmpDir, "/tests/testthat/"), "testForCodeStyle.R", "test-00_codeStyle.R")
+  copyFile(tmpDir, "Rbuildignore", ".Rbuildignore")
+
+  tmpDir
 }
 
 
