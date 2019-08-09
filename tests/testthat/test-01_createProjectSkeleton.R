@@ -191,18 +191,15 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
 
   expect_length(res10$errors, 0)
   expect_length(res10$warnings, 1)
-  expect_length(res10$notes, 0)
 
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp11"),
                                                  pkgName = "aTestPackage",
                                                  pkgFolder = "package",
                                                  rProject = FALSE)))
+
   expect_error(build(pkg = paste0(tmpdir, "/tmp11/package"),
                      path = paste0(tmpdir, "/tmp11")),
                NA)
-  expect_warning(build(pkg = paste0(tmpdir, "/tmp11/package"),
-                       path = paste0(tmpdir, "/tmp11")),
-                 NA)
 
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp12"),
                                                  pkgName = "aTestPackage",
@@ -212,7 +209,6 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
                  quiet = TRUE)
   expect_length(res12$errors, 0)
   expect_length(res12$warnings, 1)
-  expect_length(res12$notes, 0)
 
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp13/"),
                                                  pkgName = "aTestPackage",
@@ -223,5 +219,4 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
                  quiet = TRUE)
   expect_length(res13$errors, 0)
   expect_length(res13$warnings, 1)
-  expect_length(res13$notes, 0)
 })
