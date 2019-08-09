@@ -6,3 +6,5 @@
 ^prepareRepo.R$
 ^blogEntry_.*\.Rmd$
 ^\.lintr$
+^Jenkinsfile$
+^Dockerfile$

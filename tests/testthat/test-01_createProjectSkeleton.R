@@ -187,7 +187,8 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
                                                  rProject = FALSE)))
   res10 <- check(pkg = paste0(tmpdir, "/tmp10"),
                  document = FALSE,
-                 quiet = TRUE)
+                 quiet = TRUE,
+                 error_on = "never")
 
   expect_length(res10$errors, 0)
   expect_length(res10$warnings, 1)
@@ -206,7 +207,8 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
                                                  rProject = TRUE)))
   res12 <- check(pkg = paste0(tmpdir, "/tmp12"),
                  document = FALSE,
-                 quiet = TRUE)
+                 quiet = TRUE,
+                 error_on = "never")
   expect_length(res12$errors, 0)
   expect_length(res12$warnings, 1)
 
@@ -216,7 +218,8 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
                                                  rProject = TRUE)))
   res13 <- check(pkg = paste0(tmpdir, "/tmp13/package"),
                  document = FALSE,
-                 quiet = TRUE)
+                 quiet = TRUE,
+                 error_on = "never")
   expect_length(res13$errors, 0)
   expect_length(res13$warnings, 1)
 })
