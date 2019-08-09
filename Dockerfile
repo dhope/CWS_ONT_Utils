@@ -5,9 +5,6 @@
 # Author: Sebastian Warnholz
 FROM inwt/r-batch:3.6.0
 
-RUN apt-get update && \
-  apt-get install -y libjpeg-dev
-
 ADD . .
 
 RUN installPackage

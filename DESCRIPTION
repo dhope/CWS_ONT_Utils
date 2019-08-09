@@ -14,7 +14,6 @@ Imports:
     devtools (>= 1.13.5),
     lintr (>= 1.0.2),
     magrittr (>= 1.5.0),
-    qpdf,
     readr (>= 1.1.1),
     usethis
 License: MIT + file LICENSE
