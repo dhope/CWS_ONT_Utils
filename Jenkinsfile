@@ -6,7 +6,7 @@ pipeline {
     agent none
     options { disableConcurrentBuilds() }
     environment {
-        CUR_PROJ = 'INWTUtils' // github repo name
+        CUR_PROJ = 'inwt-utils' // 
         CUR_PKG = 'INWTUtils' // r-package name
         CUR_PKG_FOLDER = '.' // defaults to root
         INWT_REPO = 'inwt-vmdocker1.inwt.de:8081'
