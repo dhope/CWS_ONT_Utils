@@ -1,4 +1,4 @@
-#' @importFrom devtools build check create load_all use_testthat setup
+#' @importFrom devtools build check load_all
 #' @importFrom magrittr %>%
 #' @importFrom lintr absolute_paths_linter expect_lint_free lint
 #' assignment_linter commas_linter infix_spaces_linter Lint line_length_linter
@@ -6,6 +6,7 @@
 #' spaces_left_parentheses_linter trailing_blank_lines_linter
 #' @importFrom readr read_csv write_csv
 #' @importFrom stats setNames
+#' @importFrom usethis proj_set create_package use_testthat
 #' @importFrom utils installed.packages remove.packages sessionInfo
 NULL
 

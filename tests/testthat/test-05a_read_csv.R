@@ -2,6 +2,7 @@ context("Wrapper for read_csv to check number of rows")
 
 tmpdir <- tempdir()
 if (interactive()) {
+  if (dir.exists("../temp")) unlink("../temp", recursive = TRUE)
   dir.create("../temp")
   tmpdir <- "../temp"
 }

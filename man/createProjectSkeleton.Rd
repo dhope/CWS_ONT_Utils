@@ -22,8 +22,7 @@ live, relative to \code{dir}. "." per default, i.e., the project root.}
 
 \item{exampleScript}{logical: Create example script? (not yet used)}
 
-\item{...}{Further arguments passed to \code{\link[devtools]{create}} resp.
-\code{\link[devtools]{setup}} if creating a package}
+\item{...}{not used atm}
 }
 \description{
 Creates a useful file and folder structure. This includes:
