@@ -6,6 +6,7 @@
 #' spaces_left_parentheses_linter trailing_blank_lines_linter
 #' @importFrom readr read_csv write_csv
 #' @importFrom stats setNames
+#' @importFrom usethis proj_set create_package use_testthat
 #' @importFrom utils installed.packages remove.packages sessionInfo
 NULL
 

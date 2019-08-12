@@ -186,10 +186,10 @@ createTmpPackage <- function(pkgName, description) {
   tmpDir <- paste0(tmpDir, "/", pkgName)
 
   setwd(tmpDir)
-  usethis::proj_set(tmpDir, force = TRUE)
+  proj_set(tmpDir, force = TRUE)
 
-  suppressWarnings(usethis::create_package(path = tmpDir, fields = description, rstudio = FALSE))
-  suppressWarnings(usethis::use_testthat())
+  suppressWarnings(create_package(path = tmpDir, fields = description, rstudio = FALSE))
+  suppressWarnings(use_testthat())
 
   copyFile(paste0(tmpDir, "/tests/testthat/"), "testForCodeStyle.R", "test-00_codeStyle.R")
   copyFile(tmpDir, "Rbuildignore", ".Rbuildignore")
