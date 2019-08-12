@@ -201,6 +201,10 @@ test_that("packages created with createProjectSkeleton can be built/checked", {
   expect_error(build(pkg = paste0(tmpdir, "/tmp11/package"),
                      path = paste0(tmpdir, "/tmp11")),
                NA)
+  expect_warning(build(pkg = paste0(tmpdir, "/tmp11/package"),
+                     path = paste0(tmpdir, "/tmp11")),
+               NA)
+
 
   invisible(capture.output(createProjectSkeleton(paste0(tmpdir, "/tmp12"),
                                                  pkgName = "aTestPackage",
