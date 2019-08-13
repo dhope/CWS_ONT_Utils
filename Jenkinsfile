@@ -27,18 +27,6 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy R-package') {
-            agent { label 'eh2' }
-            when { branch 'master' }
-            steps {
-                sh '''
-                rm -vf *.tar.gz
-                docker pull inwt/r-batch:latest
-                docker run --rm --network host -v $PWD:/app --user `id -u`:`id -g` inwt/r-batch:latest R CMD build $CUR_PKG_FOLDER
-                R -e "drat::insertPackage('`echo $CUR_PKG`_`grep -E '^Version:[ \t]*[0-9.]{3,10}' $CUR_PKG_FOLDER/DESCRIPTION | awk '{print $2}'`.tar.gz', '/var/www/html/r-repo'); drat::archivePackages(repopath = '/var/www/html/r-repo')"
-                '''
-            }
-        }
         stage('Deploy Docker-image') {
             agent { label 'docker' }
             when  { branch 'master' }
@@ -47,6 +35,19 @@ pipeline {
                 docker build --pull -t $INWT_REPO/$CUR_PROJ:latest .
                 docker push $INWT_REPO/$CUR_PROJ:latest
                 docker rmi $INWT_REPO/$CUR_PROJ:latest
+                '''
+            }
+        }
+        stage('Deploy R-package') {
+            agent { label 'eh2' }
+            when { branch 'master' }
+            steps {
+                sh '''
+                docker pull $INWT_REPO/$CUR_PROJ:latest
+                docker run --rm --network host -v $PWD:/app --user `id -u`:`id -g` $INWT_REPO/$CUR_PROJ:latest R CMD build $CUR_PKG_FOLDER
+                R -e "drat::insertPackage('`echo $CUR_PKG`_`grep -E '^Version:[ \t]*[0-9.]{3,10}' $CUR_PKG_FOLDER/DESCRIPTION | awk '{print $2}'`.tar.gz', '/var/www/html/r-repo'); drat::archivePackages(repopath = '/var/www/html/r-repo')"
+                docker rmi $INWT_REPO/$CUR_PROJ:latest
+                rm -vf *.tar.gz
                 '''
             }
         }
