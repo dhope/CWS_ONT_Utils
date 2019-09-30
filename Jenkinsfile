@@ -45,7 +45,7 @@ pipeline {
                 sh '''
                 docker pull $INWT_REPO/$CUR_PROJ:latest
                 docker run --rm --network host -v $PWD:/app --user `id -u`:`id -g` $INWT_REPO/$CUR_PROJ:latest R CMD build $CUR_PKG_FOLDER
-                R -e "drat::insertPackage('`echo $CUR_PKG`_`grep -E '^Version:[ \t]*[0-9.]{3,10}' $CUR_PKG_FOLDER/DESCRIPTION | awk '{print $2}'`.tar.gz', '/var/www/html/r-repo'); drat::archivePackages(repopath = '/var/www/html/r-repo')"
+                docker run --rm -v $PWD:/app -v /var/www/html/r-repo:/var/www/html/r-repo inwt/r-batch:latest R -e "drat::insertPackage(dir(pattern='.tar.gz'), '/var/www/html/r-repo'); drat::archivePackages(repopath = '/var/www/html/r-repo')"
                 docker rmi $INWT_REPO/$CUR_PROJ:latest
                 rm -vf *.tar.gz
                 '''
