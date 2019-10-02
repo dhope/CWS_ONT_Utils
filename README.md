@@ -1,9 +1,10 @@
-# INWTUtils
+# CWS_ONT_Utils
 This repository contains a package which provides utility functions
-used by the INWT Statistics GmbH. This includes amongst others
-functions to create a file structure for new projects, to check
-code for violations of style conventions and to keep the searchpath
-clean. In addition, an example R script is included.
+to set up common folder structure for CWS Ontario R analyses and packages.
+It is forked from [INWTUtils](https://github.com/INWT/INWTUtils) by the INWT Statistics GmbH. 
+This includes amongst others functions to create a file structure for new projects, to check
+code for violations of style conventions and to keep the searchpath clean. 
+In addition, an example R script is included.
 
 
 # Creating a file structure for a new project
